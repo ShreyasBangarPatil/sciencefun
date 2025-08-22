@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScienceFun - DIY Science Experiments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
+        }
+        
+        .experiment-card {
+            transition: all 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        
+        .experiment-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .experiment-card img {
+            transition: transform 0.3s ease;
+            border-radius: 0.5rem;
+        }
+        
+        .experiment-card img:hover {
+            transform: scale(1.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Decorative floating shapes */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: floatShape 6s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        @keyframes floatShape {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-flask text-blue-500 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-blue-600">ScienceFun</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link active-nav text-gray-800 hover:text-blue-600 px-3 py-2 text-sm font-medium" onclick="showSection('home')">Home</a>
+                    <a href="#" class="nav-link text-gray-800 hover:text-blue-600 px-3 py-2 text-sm font-medium" onclick="showSection('experiments')">Experiments</a>
+                    <a href="#" class="nav-link text-gray-800 hover:text-blue-600 px-3 py-2 text-sm font-medium" onclick="showSection('about')">About</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-800 hover:text-blue-600 focus:outline-none" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white pb-3 px-4">
+            <div class="flex flex-col space-y-2">
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600" onclick="showSection('home'); toggleMobileMenu()">Home</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600" onclick="showSection('experiments'); toggleMobileMenu()">Experiments</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600" onclick="showSection('about'); toggleMobileMenu()">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="fade-in">
+        <!-- Hero Section -->
+        <div class="hero-gradient text-white py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-6" data-aos="fade-right" data-aos-duration="1000">Discover the Joy of Science at Home</h1>
+                        <p class="text-xl mb-8" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Fun, safe, and educational experiments you can do with everyday materials.</p>
+                        <button class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300" onclick="showSection('experiments')" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="400">
+                            Explore Experiments
+                        </button>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="600">
+                        <img src="https://images.unsplash.com/photo-1595311182166-d63273ddc386?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Science Experiment" class="w-64 h-64 floating">
+                    </div>
+                    <div class="md:w-1/2 flex justify-center mt-8" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="700">
+<img src="https://images.unsplash.com/photo-1650969789746-5da3ecc985ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Scientist Holding Flask" class="w-64 h-64 rounded-lg shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Features Section -->
+            <div class="max-w-6xl mx-auto px-4 py-16">
+                <h2 class="text-3xl font-bold text-center mb-12">Why Try DIY Science?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <img src="https://cdn2.psychologytoday.com/assets/styles/manual_crop_1_1_1200x1200/public/field_blog_entry_images/2024-02/bigstock--124337477%20curiosity%20lightbulb%202-13-24.jpg?itok=vpktgA_s" alt="Stimulates Curiosity" class="mx-auto mb-4 rounded-full w-16 h-16 object-cover">
+                        <h3 class="text-xl font-semibold mb-2">Stimulates Curiosity</h3>
+                        <p class="text-gray-600">Hands-on experiments spark questions and critical thinking about how the world works.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <img src="https://aem.cast.org/binaries/content/gallery/aemm/about/aem-pour-poster.png/aem-pour-poster.png/aem%3Amedium" alt="Accessible Materials" class="mx-auto mb-4 rounded-full w-16 h-16 object-cover">
+                        <h3 class="text-xl font-semibold mb-2">Accessible Materials</h3>
+                        <p class="text-gray-600">All experiments use common household items you probably already have.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTjiYqnROFbcqwomJuKE2gxmn8SCmUCyocWg&s" alt="Fun Learning" class="mx-auto mb-4 rounded-full w-16 h-16 object-cover">
+                        <h3 class="text-xl font-semibold mb-2">Fun Learning</h3>
+                        <p class="text-gray-600">Makes complex scientific concepts engaging and memorable through practical application.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="bg-blue-50 py-16">
+                <div class="max-w-6xl mx-auto px-4">
+                    <h2 class="text-3xl font-bold text-center mb-12">What Parents & Teachers Say</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-user text-blue-600"></i>
+                                </div>
+                                <div>
+                            <h4 class="font-semibold">Anita Sharma</h4>
+                            <p class="text-gray-500 text-sm">Parent</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"My kids look forward to our weekend science experiments now. The baking soda volcano was a huge hit!"</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Ravi Kumar</h4>
+                            <p class="text-gray-500 text-sm">Science Teacher</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"I've incorporated several of these experiments into my lesson plans. They perfectly complement textbook learning."</p>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experiments Section -->
+        <section id="experiments" class="hidden fade-in py-16">
+            <div class="max-w-6xl mx-auto px-4">
+                <h1 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">DIY Science Experiments</h1>
+                
+                <div class="mb-8 flex justify-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative w-full max-w-md">
+                        <input type="text" id="searchInput" placeholder="Search experiments..." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button class="absolute right-2 top-2 text-gray-500 hover:text-blue-600" onclick="searchExperiments()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+<div class="grid grid-cols-3 gap-6" id="experimentsContainer">
+    <!-- Experiment cards will be displayed in 2x3 grid format -->
+
+        <!-- Science Project 1: Baking Soda Volcano -->
+        <div class="experiment-card bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="200">
+            <img src="https://images.unsplash.com/photo-1664671617698-1fc91cabfb33?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Baking Soda Volcano" class="mb-4 w-full rounded-lg shadow-md object-cover h-48">
+            <h2 class="text-2xl font-bold mb-2">Baking Soda Volcano</h2>
+            <p class="mb-4">Create a classic erupting volcano using simple household ingredients.</p>
+            <div class="mb-4">
+                <a href="https://www.youtube.com/watch?v=T2h8jFQB6OY" target="_blank" class="text-blue-600 underline font-semibold">Watch Baking soda volcano Tutorial Video</a>
+            </div>
+            <h3 class="font-semibold mb-1">Materials:</h3>
+            <ul class="list-disc list-inside mb-4">
+                <li>Baking soda</li>
+                <li>Vinegar</li>
+                <li>Dish soap</li>
+                <li>Red food coloring</li>
+                <li>Plastic bottle</li>
+                <li>Clay or playdough</li>
+            </ul>
+            <h3 class="font-semibold mb-1">Instructions:</h3>
+            <ol class="list-decimal list-inside">
+                <li>Shape the clay around the bottle to form a volcano.</li>
+                <li>Add baking soda, dish soap, and food coloring to the bottle.</li>
+                <li>Pour in vinegar and watch the eruption!</li>
+            </ol>
+        </div>
+
+        <!-- Science Project 2: Rainbow in a Jar -->
+        <div class="experiment-card bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="300">
+            <img src="https://images.unsplash.com/photo-1552321873-6c6796efeb2a?q=80&w=699&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&w=400&q=80" alt="Rainbow in a Jar" class="mb-4 w-full rounded-lg shadow-md object-cover h-48">
+            <h2 class="text-2xl font-bold mb-2">Rainbow in a Jar</h2>
+            <p class="mb-4">Learn about density by layering colored liquids to create a rainbow effect.</p>
+            <div class="mb-4">
+                <a href="https://www.youtube.com/watch?v=T2h8jFQB6OY" target="_blank" class="text-blue-600 underline font-semibold">Watch Rainbow in a Jar Tutorial Video</a>
+            </div>
+            <h3 class="font-semibold mb-1">Materials:</h3>
+            <ul class="list-disc list-inside mb-4">
+                <li>Honey</li>
+                <li>Dish soap</li>
+                <li>Water</li>
+                <li>Vegetable oil</li>
+                <li>Rubbing alcohol</li>
+                <li>Food coloring</li>
+                <li>Clear glass jar</li>
+            </ul>
+            <h3 class="font-semibold mb-1">Instructions:</h3>
+            <ol class="list-decimal list-inside">
+                <li>Color each liquid with different food coloring.</li>
+                <li>Slowly pour each liquid into the jar in order of density.</li>
+                <li>Observe the layers forming a rainbow.</li>
+            </ol>
+        </div>
+
+        <!-- Science Project 3: Static Electricity Butterfly -->
+        <div class="experiment-card bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="400">
+            <img src="https://images.unsplash.com/photo-1638822413721-4cc540cd7145?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Static Electricity Butterfly" class="mb-4 w-full rounded-lg shadow-md object-cover h-48">
+            <h2 class="text-2xl font-bold mb-2">Static Electricity Butterfly</h2>
+            <p class="mb-4">Explore static electricity by making a paper butterfly flap its wings.</p>
+            <div class="mb-4">
+                <a href="https://www.youtube.com/watch?v=J0GjrGr82Uw" target="_blank" class="text-blue-600 underline font-semibold">Watch Static Electricity Butterfly Tutorial Video</a>
+            </div>
+            <h3 class="font-semibold mb-1">Materials:</h3>
+            <ul class="list-disc list-inside mb-4">
+                <li>Lightweight paper</li>
+                <li>Balloon</li>
+                <li>Scissors</li>
+                <li>Tape</li>
+                <li>String</li>
+            </ul>
+            <h3 class="font-semibold mb-1">Instructions:</h3>
+            <ol class="list-decimal list-inside">
+                <li>Cut out a butterfly shape from the paper.</li>
+                <li>Attach the butterfly to a string and tape it to a surface.</li>
+                <li>Rub the balloon on your hair to create static.</li>
+                <li>Bring the balloon close to the butterfly and watch the wings move.</li>
+            </ol>
+        </div>
+
+        <!-- Science Project 4: Homemade Lava Lamp -->
+        <div class="experiment-card bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="500">
+            <img src="https://images.unsplash.com/photo-1574882225022-5f45b99d4966?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Homemade Lava Lamp" class="mb-4 w-full rounded-lg shadow-md object-cover h-48">
+            <h2 class="text-2xl font-bold mb-2">Homemade Lava Lamp</h2>
+            <p class="mb-4">Create a colorful lava lamp using oil, water, and effervescent tablets.</p>
+            <div class="mb-4">
+                <a href="https://www.youtube.com/watch?v=t5jDV8yzJAo" target="_blank" class="text-blue-600 underline font-semibold">Watch Homemade Lava Lamp Tutorial Video</a>
+            </div>
+            <h3 class="font-semibold mb-1">Materials:</h3>
+            <ul class="list-disc list-inside mb-4">
+                <li>Clear plastic bottle or glass jar</li>
+                <li>Vegetable oil</li>
+                <li>Water</li>
+                <li>Food coloring</li>
+                <li>Alka-Seltzer tablets</li>
+            </ul>
+            <h3 class="font-semibold mb-1">Instructions:</h3>
+            <ol class="list-decimal list-inside">
+                <li>Fill the bottle mostly with oil, then add water to fill the rest.</li>
+                <li>Add a few drops of food coloring.</li>
+                <li>Break an Alka-Seltzer tablet into pieces and drop them in one at a time.</li>
+                <li>Watch the colorful bubbles rise and fall like a lava lamp.</li>
+            </ol>
+        </div>
+
+        <!-- Science Project 5: Walking Water -->
+        <div class="experiment-card bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="600">
+            <img src="https://funlearningforkids.com/wp-content/uploads/2018/03/Walking-Water-Science-Experiment-8.jpg" alt="Walking Water" class="mb-4 w-full rounded-lg shadow-md object-cover h-48">
+            <h2 class="text-2xl font-bold mb-2">Walking Water</h2>
+            <p class="mb-4">Observe capillary action by moving colored water between cups using paper towels.</p>
+            <div class="mb-4">
+                <a href="https://www.youtube.com/results?search_query=Walking+Water" target="_blank" class="text-blue-600 underline font-semibold">Watch Walking Water Tutorial Video</a>
+            </div>
+            <h3 class="font-semibold mb-1">Materials:</h3>
+            <ul class="list-disc list-inside mb-4">
+                <li>3 clear cups</li>
+                <li>Paper towels</li>
+                <li>Water</li>
+                <li>Food coloring (red, blue, yellow)</li>
+            </ul>
+            <h3 class="font-semibold mb-1">Instructions:</h3>
+            <ol class="list-decimal list-inside">
+                <li>Fill the first and third cups with colored water (red and blue).</li>
+                <li>Place empty cup in the middle.</li>
+                <li>Fold paper towels into strips and place one end in colored water and the other in the empty cup.</li>
+                <li>Watch as water "walks" through the paper towels and mixes colors.</li>
+            </ol>
+        </div>
+
+    <!-- Empty slot for 6th experiment -->
+    <div class="experiment-card bg-gray-100 p-6 rounded-lg shadow-md border-2 border-dashed border-gray-300 flex flex-col items-center justify-center" data-aos="fade-up" data-aos-delay="700">
+        <div class="bg-gray-200 w-32 h-32 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-plus text-gray-400 text-4xl"></i>
+        </div>
+        <h2 class="text-xl font-bold text-gray-500 mb-2">Coming Soon</h2>
+        <p class="text-gray-400 text-center">New experiment will be added here!</p>
+    </div>
+
+</div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="hidden fade-in py-16">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="md:flex">
+                        <div class="md:w-1/2 bg-blue-50 p-8 flex items-center justify-center">
+                            <img src="https://img.freepik.com/free-photo/human-machine-interaction-with-dna_23-2152000900.jpg?semt=ais_hybrid&w=740&q=80" alt="Laboratory Glassware" class="w-64 h-64 rounded-lg shadow-lg">
+                        </div>
+                        <div class="md:w-1/2 p-8">
+                            <h1 class="text-3xl font-bold mb-4">About ScienceFun</h1>
+                            <p class="text-gray-600 mb-4">
+                                ScienceFun is dedicated to making science education accessible, engaging, and fun for everyone. 
+                                Our mission is to inspire the next generation of scientists, engineers, and curious minds by 
+                                providing high-quality, safe, and educational experiments that can be done at home.
+                            </p>
+                            <p class="text-gray-600 mb-6">
+                                All our experiments are carefully tested and selected to ensure they're appropriate for 
+                                various age groups while teaching fundamental scientific principles.
+                            </p>
+                            <!-- Removed extra image placeholders -->
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fab fa-facebook-f text-xl"></i>
+                                </a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                </a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fab fa-pinterest text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold mb-6 text-center">Our Team</h2>
+                    <div class="flex justify-center">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+                            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                                <div class="bg-blue-100 w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-user text-blue-600 text-4xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Swaraj Shastri</h3>
+                                <p class="text-blue-600 mb-2">Chief Developer</p>
+                                <p class="text-gray-600">Pursuing Btech from DYPIU.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                                <div class="bg-blue-100 w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-user text-blue-600 text-4xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Shreyas Bangar Patil</h3>
+                                <p class="text-blue-600 mb-2">Chief Creative Officer</p>
+                                <p class="text-gray-600">Pursuing Btech from DYPIU.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-flask text-blue-400 mr-2"></i>
+                        ScienceFun
+                    </h3>
+                    <p class="text-gray-400">Making science fun and accessible for everyone.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white" onclick="showSection('home')">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white" onclick="showSection('experiments')">Experiments</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white" onclick="showSection('about')">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Safety</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Guidelines</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Age Recommendations</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Supervision Tips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Subscribe</h4>
+                    <p class="text-gray-400 mb-4">Get new experiments delivered to your inbox weekly.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-3 py-2 rounded-l-lg text-gray-800 w-full">
+                        <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 ScienceFun. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Experiment Details Modal -->
+    <div id="experimentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <!-- Modal content would go here -->
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = ['home', 'experiments', 'about'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('hidden');
+                }
+            });
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+            }
+
+            // Update active nav link styling
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+            });
+            const activeLink = Array.from(navLinks).find(link => link.getAttribute('onclick')?.includes(`showSection('${sectionId}')`));
+            if (activeLink) {
+                activeLink.classList.add('active-nav');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        }
+
+        // Initialize to show home section on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('home');
+        });
+    </script>
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element" class="fixed bottom-4 right-4 z-50"></div>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        // Google Translate Function
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,hi,zh-CN,ja,ru,ar,pt,mr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <style>
+        /* Custom styling for Google Translate widget */
+        .goog-te-gadget {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        
+        .goog-te-gadget-simple {
+            background-color: #3b82f6 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 8px 12px !important;
+        }
+        
+        .goog-te-gadget-simple .goog-te-menu-value span {
+            color: white !important;
+        }
+        
+        .goog-te-gadget-simple .goog-te-menu-value span:first-child {
+            display: none !important;
+        }
+        
+        .goog-te-gadget-simple .goog-te-menu-value span:last-child {
+            color: white !important;
+            font-size: 14px !important;
+        }
+        
+        .goog-te-gadget-simple .goog-te-menu-value:after {
+            content: "🌐 Translate" !important;
+            color: white !important;
+        }
+        
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        
+        body {
+            top: 0 !important;
+        }
+        
+        /* Hide Google branding */
+        .goog-logo-link, .goog-te-gadget span a[href="http://translate.google.com"] {
+            display: none !important;
+        }
+        
+        .goog-te-gadget .goog-te-combo {
+            margin: 0 !important;
+            padding: 4px !important;
+            border-radius: 4px !important;
+            border: 1px solid #ccc !important;
+        }
+    </style>
+</body>
+</html>
